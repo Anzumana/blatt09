@@ -105,5 +105,21 @@ int main(void) {
 		logTick(t);
 		deltaTick(t);
 		drainAutoReleaseBuffer();
+
+/* Removing the drainAutoReleaseBuffer would mean that 
+every single time a tick gets created this tick will stay in memory
+we would never delete it. also the array in which we store the 
+pointers to our ticks would incread without end.
+Therefore at some point the programm would crash since there is no 
+more avaialble memory to allocate. 
+*/
+
+
+/* Refrence Counting is always usefull to make sure that all the objects for which we reserved some memmory are being release once we don't
+need them anymore.
+Reference Counting is especially usefull when we create s system where the amount of references to the objects that we use varie a lot.
+A good example would be if we were to create an application that manages files.
+if we represent each file as an object and there can be references in one file to the other. If we wanted to build a functionality that you can only delete a file if there are not more references from other files to that file. We would need to implement some sort of reference counting to make this possible.
+*/
 	}
 }
